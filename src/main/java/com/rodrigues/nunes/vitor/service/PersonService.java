@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.rodrigues.nunes.vitor.dto.MessageResponseDTO;
 import com.rodrigues.nunes.vitor.dto.PersonDTO;
 import com.rodrigues.nunes.vitor.entity.Person;
+import com.rodrigues.nunes.vitor.exception.PersonNotFoundException;
 import com.rodrigues.nunes.vitor.mapper.PersonMapper;
 import com.rodrigues.nunes.vitor.repository.PersonRepository;
 
@@ -31,5 +32,10 @@ public class PersonService {
 	public List<PersonDTO> listAll() {
 		List<Person> persons = personRepository.findAll();
 		return persons.stream().map(personMapper::toDTO).collect(Collectors.toList());
+	}
+
+	public PersonDTO findById(Long id) throws PersonNotFoundException {
+		Person person = personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
+		return personMapper.toDTO(person);
 	}
 }
