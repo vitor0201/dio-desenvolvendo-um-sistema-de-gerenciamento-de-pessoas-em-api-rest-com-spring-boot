@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +41,13 @@ public class PersonController {
 	}
 
 	@GetMapping("/{id}")
-	public PersonDTO findById(@PathVariable Long id) throws PersonNotFoundException {
+	public PersonDTO findById( Long id) throws PersonNotFoundException {
 		return personService.findById(id);
+	}
+
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteById(@PathVariable Long id) throws PersonNotFoundException {
+		personService.deleteById(id);
 	}
 }
