@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +21,14 @@ import com.rodrigues.nunes.vitor.dto.PersonDTO;
 import com.rodrigues.nunes.vitor.exception.PersonNotFoundException;
 import com.rodrigues.nunes.vitor.service.PersonService;
 
+import lombok.AllArgsConstructor;
+
 @RestController
 @RequestMapping("/api/v1/people")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonController {
 
 	private PersonService personService;
-
-	public PersonController(PersonService personService) {
-		this.personService = personService;
-	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)

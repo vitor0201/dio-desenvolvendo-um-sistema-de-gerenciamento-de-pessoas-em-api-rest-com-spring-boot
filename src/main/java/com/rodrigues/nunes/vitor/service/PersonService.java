@@ -3,6 +3,7 @@ package com.rodrigues.nunes.vitor.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rodrigues.nunes.vitor.dto.MessageResponseDTO;
@@ -12,21 +13,20 @@ import com.rodrigues.nunes.vitor.exception.PersonNotFoundException;
 import com.rodrigues.nunes.vitor.mapper.PersonMapper;
 import com.rodrigues.nunes.vitor.repository.PersonRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
 
 	private PersonRepository personRepository;
 
-	private final PersonMapper personMapper = PersonMapper.INSTACE;
-
-	public PersonService(PersonRepository personRepository) {
-		this.personRepository = personRepository;
-	}
+	private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
 	public MessageResponseDTO createPerson(PersonDTO person) {
 		Person personToSave = personMapper.toModel(person);
 		Person savedPerson = personRepository.save(personToSave);
-		return createMessageResponse(savedPerson.getId(), "Created person with ID ");
+		return createMessageResponse(savedPerson.getId(), "Created person with ID " );
 	}
 
 	public List<PersonDTO> listAll() {
